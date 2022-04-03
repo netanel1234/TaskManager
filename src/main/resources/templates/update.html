@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update task</title>
+</head>
+<body>
+    <form method="get" th:action="@{/updateItem}">
+        <input type="text" name="task"><br><br>
+        <input type="submit" value="update">
+    </form>
+    <a th:href="@{list}">Back to your list</a><br><br>
+</body>
+</html>

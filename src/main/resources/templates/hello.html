@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+    <h1>Hello</h1><br><br>
+    <h2>Login/Register</h2><br>
+    <p>If you do not have an account, you need to register first</p>
+    <a th:href="@{register}">to register</a>
+
+    <h3>Login</h3>
+    <form method="get" th:action="@{/login}">
+        <div class="form-group">
+            <p>User name: <input type="text" name="username"></p>
+            <p>Password: <input type="text" name="password"></p>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+
+    </form>
+</body>
+</html>
