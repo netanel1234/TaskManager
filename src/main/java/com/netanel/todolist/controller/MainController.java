@@ -1,5 +1,9 @@
-package com.netanel.todolist;
+package com.netanel.todolist.controller;
 
+import com.netanel.todolist.repository.ItemRepository;
+import com.netanel.todolist.repository.UserRepository;
+import com.netanel.todolist.entity.Item;
+import com.netanel.todolist.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

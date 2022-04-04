@@ -1,5 +1,6 @@
-package com.netanel.todolist;
+package com.netanel.todolist.repository;
 
+import com.netanel.todolist.entity.Item;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

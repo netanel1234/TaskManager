@@ -1,4 +1,4 @@
-package com.netanel.todolist;
+package com.netanel.todolist.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
