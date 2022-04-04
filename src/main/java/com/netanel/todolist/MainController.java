@@ -44,9 +44,7 @@ public class MainController {
     public String addUser(@RequestParam String name,
                           @RequestParam String password,
                           HttpSession session) {
-        print("in addUser()");
         User user = new User(name, password);
-        print(user.toString());
         userRepository.save(user);
         session.setAttribute("id", user.getUserid());
         session.setAttribute("list", new ArrayList<Item>());
@@ -57,14 +55,9 @@ public class MainController {
     public String addItem(@RequestParam String task,
                           HttpSession session,
                           Model model) {
-        print("in addItem()");
         Item item = new Item((Integer) session.getAttribute("id"), task);
-        print("item = " + item.toString());
         itemRepository.save(item);
-        List<Item> list = (ArrayList<Item>) session.getAttribute("list");
-        System.out.println(list);
-        list.add(item);
-        System.out.println(list);
+        List<Item> list = itemRepository.findItemsByUserId((Integer) session.getAttribute("id"));
         model.addAttribute("items", list);
         return "list";
     }
@@ -72,7 +65,6 @@ public class MainController {
     @GetMapping("/update")
     public String update(@RequestParam Integer serialnumber,
                          HttpSession session) {
-        print("in update(), serialnumber = " + serialnumber + " session.id = " + session.getAttribute("id"));
         itemRepository.deleteById(serialnumber);
         session.setAttribute("serialnumber", serialnumber);
         return "update";
@@ -82,16 +74,9 @@ public class MainController {
     public String updateItem(@RequestParam String task,
                              HttpSession session,
                              Model model) {
-        print("in updateItem(), task = " + task + " session.id = " + session.getAttribute("id"));
         Item item = new Item((Integer) session.getAttribute("id"), task);
-        System.out.println(item.toString());
         itemRepository.save(item);
-        ArrayList<Item> list = new ArrayList<>();
-        Iterable<Item> iterable = itemRepository.findAll();
-        for(Item i : iterable)
-            if(i.getUserid() == ((Integer) session.getAttribute("id")))
-                list.add(i);
-        System.out.println(list);
+        List<Item> list = itemRepository.findItemsByUserId((Integer) session.getAttribute("id"));
         model.addAttribute("items", list);
         return "list";
     }
@@ -102,12 +87,7 @@ public class MainController {
                              Model model) {
         print("in deleteItem() serialnumber = " + serialnumber + " session.id = " + session.getAttribute("id"));
         itemRepository.deleteById(serialnumber);
-        Iterable<Item> iterable = itemRepository.findAll();
-        ArrayList<Item> list = new ArrayList<>();
-        for(Item i : iterable)
-            if(i.getUserid() == ((Integer) session.getAttribute("id")))
-                list.add(i);
-        System.out.println(list);
+        List<Item> list = itemRepository.findItemsByUserId((Integer) session.getAttribute("id"));
         model.addAttribute("items", list);
         return "list";
     }
@@ -117,7 +97,6 @@ public class MainController {
                         @RequestParam String password,
                         HttpSession session,
                         Model model) {
-        print("in login() username = " + username + "password = " + password + "session.id = " + session.getAttribute("id"));
         User connected = null;
         Iterable<User> iterable = userRepository.findAll();
         for(User user : iterable)
@@ -128,16 +107,9 @@ public class MainController {
         if (connected==null)
             return "notFound";
         Integer id = connected.getUserid();
-        System.out.println("id = " + id);
         session.setAttribute("id", id);
-        List<Item> list = new ArrayList<>();
-        System.out.println(list);
-        Iterable<Item> itemsList = itemRepository.findAll();
-        for(Item i : itemsList)
-            if(i.getUserid() == Integer.valueOf(id))
-                list.add(i);
+        List<Item> list = itemRepository.findItemsByUserId(id);
         model.addAttribute("items", list);
-        System.out.println(list);
         return "list";
     }
 

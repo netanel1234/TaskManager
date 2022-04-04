@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ItemRepository extends CrudRepository<Item, Integer> {
 
-    @Query(value = "SELECT task FROM item WHERE userid = ?1", nativeQuery = true)
-    Iterable<Item> findItemsByUserId(Integer userid);
+    @Query(value = "SELECT * FROM item WHERE userid = ?1", nativeQuery = true)
+    List<Item> findItemsByUserId(Integer userid);
 
 }
